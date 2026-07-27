@@ -15,3 +15,8 @@ and used BeginPlay to initialize the material before gameplay.
 
 The biggest challenge for me this time, was the game crashing whenever the projectile hit an object. The reason was that
 it was not assigned. After fixing the issue the game worked as expected, but I did feel like the colors could be more random.
+
+Module 3 - Stepping Stone 2
+
+In this assignment I learned how to use Niagara particle systems and connect them with the code. The tutorial showed me how to create the particle effect, add user parameters, and pass an randomized color from the code so the particles matched the object they were attached to. While in the stepping stone assignment, I added a paint splatter effect when the projectile hits an object, matching colors with the decal and projectile mesh. I also made it so that the projectile is destroyed once it hits. I had a small issue adding the Niagara system, specifically thr regenerating Visual Studio files, but after making sure to close the project and code, then building the project from VS, helped sync everything correctly
+I added

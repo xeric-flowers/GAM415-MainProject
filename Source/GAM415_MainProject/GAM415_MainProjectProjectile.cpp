@@ -2,7 +2,14 @@
 
 #include "GAM415_MainProjectProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Components/SphereComponent.h"
+#include "Components/DecalComponent.h"
+#include "Kismet/GameplayStatics.h"	
+
+
+
+
 
 AGAM415_MainProjectProjectile::AGAM415_MainProjectProjectile() 
 {
@@ -16,8 +23,15 @@ AGAM415_MainProjectProjectile::AGAM415_MainProjectProjectile()
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
 	CollisionComp->CanCharacterStepUpOn = ECB_No;
 
+	// *Module 2
+	// *Create a static mesh component for the ball
+	ballMesh = CreateDefaultSubobject<UStaticMeshComponent>("Ball Mesh");
+
 	// Set as root component
 	RootComponent = CollisionComp;
+
+	// *Attach the mesh to the collision component
+	ballMesh->SetupAttachment(CollisionComp);
 
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
@@ -31,6 +45,8 @@ AGAM415_MainProjectProjectile::AGAM415_MainProjectProjectile()
 	InitialLifeSpan = 3.0f;
 }
 
+
+
 void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// Only add impulse and destroy projectile if we hit a physics
@@ -40,4 +56,29 @@ void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* 
 
 		Destroy();
 	}
+
+	// *Module 2
+	// *Spawn a decal at the hit location with a random color and frame number
+	if (OtherActor != nullptr)
+	{
+		float ranNumX = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+		float ranNumY = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+		float ranNumZ = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);	
+		float frameNum = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
+	
+		FVector4 randColor = FVector4(ranNumX, ranNumY, ranNumZ, 1.f);
+
+		auto Decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), baseMat, FVector(UKismetMathLibrary::RandomFloatInRange(20.f, 40.f)), Hit.Location, Hit.Normal.Rotation(), 0.f);
+		auto MatInstance = Decal->CreateDynamicMaterialInstance();
+
+		MatInstance->SetVectorParameterValue("Color", randColor);
+		MatInstance->SetScalarParameterValue("Frame", frameNum);
+
+	
+	}
+
+
+
+
+
 }

@@ -22,8 +22,33 @@ class AGAM415_MainProjectProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+	// *Module 2
+	// *Static mesh component for the ball
+
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* ballMesh;
+	
+	UPROPERTY(EditAnywhere)
+		UMaterial* baseMat;
+
+	// *Dynamic material instance for the ball
+	UPROPERTY()
+	FLinearColor randColor;
+
+	UPROPERTY(EditAnywhere)
+	UMaterialInterface* projMat;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* dmiMat;
+
+
+
 public:
 	AGAM415_MainProjectProjectile();
+
+	// *add beginplay function when the projectile is spawned
+protected:
+	virtual void BeginPlay();
 
 	/** called when projectile hits something */
 	UFUNCTION()

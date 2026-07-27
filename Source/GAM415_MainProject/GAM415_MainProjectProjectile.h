@@ -22,7 +22,6 @@ class AGAM415_MainProjectProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
-	// *Module 2
 	// *Static mesh component for the ball
 
 	UPROPERTY(EditAnywhere)
@@ -46,7 +45,7 @@ class AGAM415_MainProjectProjectile : public AActor
 public:
 	AGAM415_MainProjectProjectile();
 
-	// *add beginplay function when the projectile is spawned
+	// *Add beginplay function when the projectile is spawned
 protected:
 	virtual void BeginPlay();
 

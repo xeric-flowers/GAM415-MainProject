@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class UNiagaraSystem; // **Forward declaration of UNiagaraSystem class
 
 UCLASS(config=Game)
 class AGAM415_MainProjectProjectile : public AActor
@@ -40,6 +41,9 @@ class AGAM415_MainProjectProjectile : public AActor
 	UPROPERTY()
 	UMaterialInstanceDynamic* dmiMat;
 
+	// **Setting up Niagara system for particle effect when the projectile hits something
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* colorP;
 
 
 public:

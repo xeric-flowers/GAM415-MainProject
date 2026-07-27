@@ -6,6 +6,8 @@
 #include "Components/SphereComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"	
+#include "NiagaraFunctionLibrary.h"		// **Reference spawn function for Niagara particle system
+#include "NiagaraComponent.h"			// **Implementation of Niagara component
 
 
 
@@ -68,9 +70,24 @@ void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* 
 		Destroy();
 	}
 
-	// *Spawn a decal at the hit location with a random color and frame number
+	// **Check if the OtherActor is valid before proceeding with spawning the Niagara particle system and decal
 	if (OtherActor != nullptr)
 	{
+		
+		// **Check if the Niagara particle system is valid before spawning it
+		if (colorP)
+		{
+
+			// **Spawn a Niagara particle system at the hit location with a random color
+			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
+
+			// **Set the random color for the Niagara particle system
+			particleComp->SetNiagaraVariableLinearColor(FString("RandomColorP"), randColor);
+			// **Destroy the ball mesh and disable collision after spawning the particle system
+			ballMesh->DestroyComponent();
+			CollisionComp->BodyInstance.SetCollisionProfileName("NoCollision");
+		}
+		
 		float frameNum = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
 
 		auto Decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), baseMat, FVector(UKismetMathLibrary::RandomFloatInRange(20.f, 40.f)), Hit.Location, Hit.Normal.Rotation(), 0.f);

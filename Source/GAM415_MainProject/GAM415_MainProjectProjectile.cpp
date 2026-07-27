@@ -46,6 +46,18 @@ AGAM415_MainProjectProjectile::AGAM415_MainProjectProjectile()
 }
 
 
+void AGAM415_MainProjectProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+	randColor = FLinearColor(UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), UKismetMathLibrary::RandomFloatInRange(0.f, 1.f), 1.f);
+
+	dmiMat = UMaterialInstanceDynamic::Create(projMat, this);
+	ballMesh->SetMaterial(0, dmiMat);
+
+	dmiMat->SetVectorParameterValue("ProjColor", randColor);
+	
+}
+
 
 void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
@@ -61,12 +73,7 @@ void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* 
 	// *Spawn a decal at the hit location with a random color and frame number
 	if (OtherActor != nullptr)
 	{
-		float ranNumX = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
-		float ranNumY = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
-		float ranNumZ = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);	
 		float frameNum = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
-	
-		FVector4 randColor = FVector4(ranNumX, ranNumY, ranNumZ, 1.f);
 
 		auto Decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), baseMat, FVector(UKismetMathLibrary::RandomFloatInRange(20.f, 40.f)), Hit.Location, Hit.Normal.Rotation(), 0.f);
 		auto MatInstance = Decal->CreateDynamicMaterialInstance();

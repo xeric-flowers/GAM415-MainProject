@@ -23,7 +23,6 @@ AGAM415_MainProjectProjectile::AGAM415_MainProjectProjectile()
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
 	CollisionComp->CanCharacterStepUpOn = ECB_No;
 
-	// *Module 2
 	// *Create a static mesh component for the ball
 	ballMesh = CreateDefaultSubobject<UStaticMeshComponent>("Ball Mesh");
 
@@ -45,7 +44,7 @@ AGAM415_MainProjectProjectile::AGAM415_MainProjectProjectile()
 	InitialLifeSpan = 3.0f;
 }
 
-
+// *Called when the game starts or when spawned, here we will set the random color for the ball and create a dynamic material instance for it
 void AGAM415_MainProjectProjectile::BeginPlay()
 {
 	Super::BeginPlay();
@@ -69,7 +68,6 @@ void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* 
 		Destroy();
 	}
 
-	// *Module 2
 	// *Spawn a decal at the hit location with a random color and frame number
 	if (OtherActor != nullptr)
 	{
@@ -83,9 +81,4 @@ void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* 
 
 	
 	}
-
-
-
-
-
 }

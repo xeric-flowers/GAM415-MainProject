@@ -19,4 +19,25 @@ it was not assigned. After fixing the issue the game worked as expected, but I d
 Module 3 - Stepping Stone 2
 
 In this assignment I learned how to use Niagara particle systems and connect them with the code. The tutorial showed me how to create the particle effect, add user parameters, and pass an randomized color from the code so the particles matched the object they were attached to. While in the stepping stone assignment, I added a paint splatter effect when the projectile hits an object, matching colors with the decal and projectile mesh. I also made it so that the projectile is destroyed once it hits. I had a small issue adding the Niagara system, specifically thr regenerating Visual Studio files, but after making sure to close the project and code, then building the project from VS, helped sync everything correctly
-I added
+I added.
+
+Module 4 - Stepping Stone 3
+
+For this stepping stone, I created a procedural terrain that is generated using X and Y values and Perlin noise.
+I was able to change values such as the noise scale and Z multiplier to control the shape and height of the terrain.
+
+I also added the ability for the projectile to alter the terrain when it hits it.
+The impact point is passed to the terrain's AlterMesh function, which finds the vertices within a set radius and moves them down by the depth value to create a digging effect.
+I did run into an issue where Unreal completely froze because of a mistake in one of my loops, but after finding and fixing it, the terrain generated correctly and I was able to shoot at it and see it change during runtime.
+
+
+
+
+
+
+
+
+
+
+
+

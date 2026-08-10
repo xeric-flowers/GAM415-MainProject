@@ -12,7 +12,7 @@ APerlinProcTerrain::APerlinProcTerrain()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	//****
+	// *** Procedural mesh component that will be used to create the terrain
 	ProcMesh = CreateDefaultSubobject<UProceduralMeshComponent>("Procedural Mesh");
 	ProcMesh->SetupAttachment(GetRootComponent());
 
@@ -23,6 +23,7 @@ APerlinProcTerrain::APerlinProcTerrain()
 void APerlinProcTerrain::BeginPlay()
 {
 	Super::BeginPlay();
+	// *** Once level begins, create the vertices and triangles for the procedural mesh based on Perlin noise
 	CreateVertices();
 	CreateTriangles();
 	ProcMesh->CreateMeshSection(sectionID, Vertices, Triangles, Normals, UV0, UpVertexColors, TArray<FProcMeshTangent>(), true);
@@ -36,7 +37,7 @@ void APerlinProcTerrain::Tick(float DeltaTime)
 
 }
 
-//**** function to alter the procedural mesh based on the impact point of the projectile
+//*** Function to alter the procedural mesh based on the impact point of the projectile
 void APerlinProcTerrain::AlterMesh(FVector impactPoint)
 {
 	for (int i = 0; i < Vertices.Num(); i++)
@@ -51,7 +52,7 @@ void APerlinProcTerrain::AlterMesh(FVector impactPoint)
 	}
 }
 
-//**** function to create vertices for the procedural mesh based on Perlin noise
+//*** Function to create vertices for the procedural mesh based on Perlin noise
 void APerlinProcTerrain::CreateVertices()
 {
 	for (int X = 0; X <= XSize; X++)
@@ -66,7 +67,7 @@ void APerlinProcTerrain::CreateVertices()
 	}
 }
 
-//**** function to create triangles for the procedural mesh based on the vertices created in CreateVertices()
+//*** function to create triangles for the procedural mesh based on the vertices created in CreateVertices()
 void APerlinProcTerrain::CreateTriangles()
 {
 	int Vertex = 0;

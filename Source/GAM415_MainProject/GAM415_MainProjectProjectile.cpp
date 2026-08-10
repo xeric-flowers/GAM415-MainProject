@@ -6,9 +6,9 @@
 #include "Components/SphereComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"	
-#include "NiagaraFunctionLibrary.h"		// **Reference spawn function for Niagara particle system
-#include "NiagaraComponent.h"			// **Implementation of Niagara component
-#include "PerlinProcTerrain.h"			// ***Reference to the PerlinProcTerrain class for the Niagara particle system
+#include "NiagaraFunctionLibrary.h"		// ** Reference spawn function for Niagara particle system
+#include "NiagaraComponent.h"			// ** Implementation of Niagara component
+#include "PerlinProcTerrain.h"			// *** Reference to the PerlinProcTerrain class so projectile can alter landscape
 
 
 

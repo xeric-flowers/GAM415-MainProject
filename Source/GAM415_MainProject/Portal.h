@@ -37,14 +37,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USceneCaptureComponent2D* sceneCapture;
 
-	// **** Add an arrow component to indicate the forward direction of the portal
+	// **** Arrow component indicates the forward direction of the portal, so player does not spawn at pivot
 	UPROPERTY(EditAnywhere)
 	UArrowComponent* rootArrow;
 
+	// **** Render targets the scene capture component, this will be used to render the view from the other portal
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UTextureRenderTarget2D* renderTarget;
 
-	// **** Add a box component to detect when the player overlaps with the portal
+	// **** Box component detects when the player overlaps with the portal
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* boxComp;
 
@@ -54,10 +55,11 @@ public:
 	UPROPERTY(EditAnywhere)
 		UMaterialInterface* mat;
 
-	// **** Add a boolean to check if the player is overlapping with the portal
+	// **** Boolean to check if the player is overlapping with the portal
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+		// **** Resets Boolean variable in the player character class to allow the player to teleport again
 	UFUNCTION()
 		void SetBool(AGAM415_MainProjectCharacter* playerChar);
 

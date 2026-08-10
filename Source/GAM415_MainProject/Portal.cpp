@@ -12,7 +12,7 @@ APortal::APortal()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	// **** Create the components for the portal
+	// **** Create the mesh, box component, scene capture component, and arrow component
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	boxComp = CreateDefaultSubobject<UBoxComponent>("Box Comp");
 	sceneCapture = CreateDefaultSubobject<USceneCaptureComponent2D>("Capture");
@@ -35,12 +35,13 @@ void APortal::BeginPlay()
 	Super::BeginPlay();
 	// **** Bind the overlap event to the OnOverlapBegin function
 	boxComp->OnComponentBeginOverlap.AddDynamic(this, &APortal::OnOverlapBegin);
+	// **** Hide the mesh in the scene capture so that it does not render itself
 	mesh->SetHiddenInSceneCapture(true);
 	//mesh->bCastStaticShadow(false);
 	//mesh->bCastDynamicShadow(false);
 
 
-	// **** Set the material of the mesh to the material specified in the editor, making illusion of a portal that is facing opposite of player
+	// **** Set the material of the mesh to the Render Target material, this will allow the scene capture to render the view from the other portal onto the mesh
 	if (mat)
 	{
 		mesh->SetMaterial(0, mat);
@@ -59,6 +60,7 @@ void APortal::Tick(float DeltaTime)
 // **** Handle the overlap event, this will be called when the player overlaps with the portal
 void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	// **** Only player character can teleport, so check if the overlapping actor is the player character
 	AGAM415_MainProjectCharacter* playerChar = Cast<AGAM415_MainProjectCharacter>(OtherActor);
 
 	if (playerChar)
@@ -72,7 +74,7 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 				FVector loc = OtherPortal->rootArrow->GetComponentLocation();
 				playerChar->SetActorLocation(loc);
 
-
+				// **** Set a timer to call the SetBool function after 1 second so that send portal doesn't send player back
 				FTimerHandle TimerHandle;
 				FTimerDelegate TimerDelegate;
 				TimerDelegate.BindUFunction(this, "SetBool", playerChar);
@@ -81,7 +83,7 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 		}
 	}
 }
-// **** Set the boolean to false after 1 second to allow the player to teleport again
+// **** Set the boolean to false to allow the player to teleport again
 void APortal::SetBool(AGAM415_MainProjectCharacter* playerChar)
 {
 	if (playerChar)

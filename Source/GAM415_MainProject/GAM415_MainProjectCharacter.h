@@ -49,7 +49,7 @@ class AGAM415_MainProjectCharacter : public ACharacter
 public:
 	AGAM415_MainProjectCharacter();
 
-// **** add boolean variable to check if the player is teleporting
+	// **** Boolean variable to check if the player is teleporting, also used to prevent the player from teleporting again immediately after teleporting
 public:
 
 	UPROPERTY(EditAnywhere)

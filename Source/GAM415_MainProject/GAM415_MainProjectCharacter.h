@@ -44,9 +44,16 @@ class AGAM415_MainProjectCharacter : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
-	
+
+	// **** add teleport input action
 public:
 	AGAM415_MainProjectCharacter();
+
+// **** add boolean variable to check if the player is teleporting
+public:
+
+	UPROPERTY(EditAnywhere)
+	bool isTeleporting;
 
 protected:
 	/** Called for movement input */

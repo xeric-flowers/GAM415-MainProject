@@ -30,6 +30,15 @@ I also added the ability for the projectile to alter the terrain when it hits it
 The impact point is passed to the terrain's AlterMesh function, which finds the vertices within a set radius and moves them down by the depth value to create a digging effect.
 I did run into an issue where Unreal completely froze because of a mistake in one of my loops, but after finding and fixing it, the terrain generated correctly and I was able to shoot at it and see it change during runtime.
 
+Module 5 - Stepping Stone 4
+
+I worked on creating a portal system using scene capture components and render targets.
+I created two connected portals that teleport the player between locations. 
+I also learned how the scene capture component follows the player's camera and displays the captured view through a render target and material, which helps create the illusion that you are actually looking through the portal.
+
+I did run into some issues while compiling because my character class was slightly different from the one used in the tutorial. After comparing the files, I was able to fix the problem and get everything working. 
+I also added an arrow component as an adjustable teleport location so the player does not spawn directly in the center of the other portal.
+
 
 
 

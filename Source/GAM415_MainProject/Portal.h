@@ -6,7 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Components/SceneCaptureComponent2D.h"	// ****
 #include "Engine/TextureRenderTarget2D.h"		// **** 
-#include "Components/BoxComponent.h"			// **** 
+#include "Components/BoxComponent.h"			// ****
+#include "Components/ArrowComponent.h"			// **** 
 #include "Portal.generated.h"					
 
 // **** Add forward declaration to access the player character class
@@ -36,10 +37,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USceneCaptureComponent2D* sceneCapture;
 
+	// **** Add an arrow component to indicate the forward direction of the portal
+	UPROPERTY(EditAnywhere)
+	UArrowComponent* rootArrow;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UTextureRenderTarget2D* renderTarget;
 
-	
+	// **** Add a box component to detect when the player overlaps with the portal
 	UPROPERTY(EditAnywhere)
 		UBoxComponent* boxComp;
 

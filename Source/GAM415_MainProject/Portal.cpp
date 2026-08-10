@@ -16,11 +16,14 @@ APortal::APortal()
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	boxComp = CreateDefaultSubobject<UBoxComponent>("Box Comp");
 	sceneCapture = CreateDefaultSubobject<USceneCaptureComponent2D>("Capture");
+	// **** Create an arrow component to indicate the forward direction of the portal
+	rootArrow = CreateDefaultSubobject<UArrowComponent>("Root Arrow");
 
 	// **** Set the box component as the root component and attach the mesh and scene capture to it
 	RootComponent = boxComp;
 	mesh->SetupAttachment(boxComp);
 	sceneCapture->SetupAttachment(mesh);
+	rootArrow->SetupAttachment(RootComponent);
 
 	// **** Disable collision so that the player can walk through the portal
 	mesh->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -33,6 +36,9 @@ void APortal::BeginPlay()
 	// **** Bind the overlap event to the OnOverlapBegin function
 	boxComp->OnComponentBeginOverlap.AddDynamic(this, &APortal::OnOverlapBegin);
 	mesh->SetHiddenInSceneCapture(true);
+	//mesh->bCastStaticShadow(false);
+	//mesh->bCastDynamicShadow(false);
+
 
 	// **** Set the material of the mesh to the material specified in the editor, making illusion of a portal that is facing opposite of player
 	if (mat)
@@ -63,7 +69,7 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 			if (!playerChar->isTeleporting)
 			{
 				playerChar->isTeleporting = true;
-				FVector loc = OtherPortal->GetActorLocation();
+				FVector loc = OtherPortal->rootArrow->GetComponentLocation();
 				playerChar->SetActorLocation(loc);
 
 

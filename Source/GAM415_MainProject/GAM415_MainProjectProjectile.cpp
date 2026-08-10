@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"	
 #include "NiagaraFunctionLibrary.h"		// **Reference spawn function for Niagara particle system
 #include "NiagaraComponent.h"			// **Implementation of Niagara component
+#include "PerlinProcTerrain.h"			// ***Reference to the PerlinProcTerrain class for the Niagara particle system
 
 
 
@@ -96,6 +97,12 @@ void AGAM415_MainProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* 
 		MatInstance->SetVectorParameterValue("Color", randColor);
 		MatInstance->SetScalarParameterValue("Frame", frameNum);
 
-	
+		// *** Check if the OtherActor is of type APerlinProcTerrain, if it is, call the AlterMesh function to modify the procedural mesh based on the impact point of the projectile
+		APerlinProcTerrain* procTerrain = Cast<APerlinProcTerrain>(OtherActor);
+
+		if(procTerrain)
+		{
+			procTerrain->AlterMesh(Hit.ImpactPoint);
+		}
 	}
 }

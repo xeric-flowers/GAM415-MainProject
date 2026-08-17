@@ -39,6 +39,16 @@ I also learned how the scene capture component follows the player's camera and d
 I did run into some issues while compiling because my character class was slightly different from the one used in the tutorial. After comparing the files, I was able to fix the problem and get everything working. 
 I also added an arrow component as an adjustable teleport location so the player does not spawn directly in the center of the other portal.
 
+Module 6 - Final Part A
+
+I focused on combining and polishing the different features I created throughout the course into my final project. I created a large
+environment covered with procedural terrain and applied a sand material to it. The player can use the projectiles to blast away the sand and 
+uncover glowing shapes hidden throughout the level. The projectiles still use randomized colors with matching decals and particle effects, while the 
+splatter texture is also randomized.
+
+I also incorporated my portal system by building two towers on opposite corners of the map. One side uses spheres as landmarks while the other uses
+cubes, making it easy to tell which side the player has traveled to. The portals allow the player to quickly move between the towers while 
+displaying the opposite location through the scene capture and render target system. 
 
 
 
